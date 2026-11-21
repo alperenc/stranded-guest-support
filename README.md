@@ -7,8 +7,7 @@ Python 3.12 or 3.13. The package lives in `src/stranded_guest_support` and is em
 ## Read first
 
 - `.specify/memory/constitution.md`: the rules that override everything else
-- `specs/002-ticket-handling-rules/spec.md`: the ticket handling rules explained below
-- `specs/001-stranded-guest-support/spec.md`: the wider crew design (flow, tools, tests). Where it differs from 002, 002 wins
+- `specs/002-ticket-handling-rules/spec.md`: the one spec. It covers the crew flow, ticket types, agents, the nine tools, safety conditions, comparable-home tests, money caps and the 60 tickets
 - `data/`: the refund and rebooking policy and the 60 tickets
 
 ## How tickets are handled
@@ -21,7 +20,7 @@ Every ticket is one of three types, and each type has one specialist agent.
 | Refund | Refund agent | `issue_refund` (never `hold_booking`) |
 | Safety | Safety agent | `handoff_to_safety_agent` only |
 
-The agents also have read and messaging tools, listed in spec 001. The two money tools each belong to one agent.
+The agents also have read and messaging tools, listed in the spec. The two money tools each belong to one agent.
 
 ### Safety comes first
 
@@ -58,4 +57,4 @@ API keys go in environment variables or a local `.env`. Git ignores `.env`.
 
 ## Status
 
-Specs 001 and 002 drafted, code not started. The 450-listing file the policy names is still missing.
+Spec drafted, code not started. The 450-listing file the policy names is still missing.

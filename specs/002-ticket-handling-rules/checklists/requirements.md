@@ -32,5 +32,7 @@
 ## Notes
 
 - `hold_booking`, `issue_refund` and `handoff_to_safety_agent` appear by name. The request and the AirCover policy name them as business actions, so they are domain vocabulary here, not an implementation choice. The spec says nothing about how they are built.
-- The spec supersedes spec 001 on one point: the safety agent's only tool is `handoff_to_safety_agent` (FR-005). Spec 001 section 4 still lists `escalate_to_human` for it and should be aligned when 001 is next edited.
+- The spec is self-contained. It holds the crew flow, all nine tools, the five safety conditions, the five comparable-home tests, the money caps and the 60-ticket notes. It points to no other spec.
+- The safety agent's only tool is `handoff_to_safety_agent` (FR-005). Retrying a failed hand-off and paging the on-call safety lead is done by the team's routing, not by the safety agent.
+- The request mentioned "nine safety signals" and "six tools". The policy has five safety conditions and the system has nine tools. The spec includes all of both.
 - The 450-listing file named in the policy is missing from the workspace. It is recorded as a dependency in Assumptions, not as a clarification.
