@@ -1,38 +1,42 @@
 # stranded-guest-support
 
-A team of AI helpers that rescues the 60 guests stranded in Lisbon on 16 November 2026. Each guest chat ends in a new home, a refund, or a live safety agent. Anyone in danger reaches a person before any money moves.
+A team of AI helpers that rescues the 60 guests stranded in Lisbon on 16 November 2026. Each guest chat ends in a new home, a refund, or a live person from Trust and Safety. Anyone in danger reaches a person before any money moves.
 
 Python 3.12 or 3.13. The package lives in `src/stranded_guest_support` and is empty so far.
 
 ## Read first
 
 - `.specify/memory/constitution.md`: the rules that override everything else
-- `specs/002-ticket-handling-rules/spec.md`: the one spec. It covers the crew flow, ticket types, agents, the nine tools, safety conditions, comparable-home tests, money caps and the 60 tickets
+- `specs/002-ticket-handling-rules/spec.md`: the one spec. It covers the four agents, the six tools, ticket types, safety conditions, comparable-home tests, money caps and the 60 tickets
 - `data/`: the refund and rebooking policy and the 60 tickets
 
-## How tickets are handled
+## The team
 
-Every ticket is one of three types, and each type has one specialist agent.
+Four agents and six tools. There is no separate safety agent.
 
-| Type | Agent | Tool it may use |
+| Agent | What it does | Tools it may use |
 |---|---|---|
-| Rebooking | Rebooking agent | `hold_booking` (never `issue_refund`) |
-| Refund | Refund agent | `issue_refund` (never `hold_booking`) |
-| Safety | Safety agent | `handoff_to_safety_agent` only |
+| Triage | Reads each ticket, runs the safety check first, hands unsafe tickets to a live person, sorts the rest as rebooking or refund | `handoff_to_safety_agent` |
+| Rebooking | Finds a comparable home and holds it | `lookup_reservation`, `search_open_listings`, `hold_booking` |
+| Refund | Refunds up to `total_paid` | `lookup_reservation`, `issue_refund` |
+| Host messaging | Contacts the host on a cleared ticket | `message_host` |
 
-The agents also have read and messaging tools, listed in the spec. The two money tools each belong to one agent.
+Every ticket is one of three types: rebooking, refund or safety. The two money tools each belong to one agent: only the rebooking agent holds homes and only the refund agent refunds.
 
-### Safety comes first
+## The rules
 
-- Any one of the five AirCover safety conditions in the guest message sends the ticket to a live safety agent:
+### Safety is a hard gate
+
+- Any one of the five AirCover safety conditions in the guest message sends the ticket to a live person:
   - `injury_or_medical_need`
   - `threat_or_violence`
   - `nowhere_safe_to_wait`
   - `unaccompanied_minor`
   - `stated_fear_of_person`
 - This holds even when the guest asks only for money, a call or a new flat. The guest's words decide, not the `guest_requested` label.
-- On a safety ticket no agent may call `issue_refund` or `hold_booking` before `handoff_to_safety_agent`. After the hand-off they stay forbidden until a live safety agent has taken the case, and the team then stops. The system enforces this, not the agent prompts.
-- If a message might describe a condition, the ticket goes to the safety agent. If a safety cue shows up mid-chat, the rebooking or refund agent stops and the ticket moves to safety.
+- The safety check runs before any money or booking tool. `issue_refund` and `hold_booking` are refused on a ticket the check has not cleared, and on a flagged ticket before `handoff_to_safety_agent`. After the hand-off they stay forbidden until a live person has taken the case, and the team then stops. The booking system enforces this, not the agent prompts.
+- No host message is sent on a flagged ticket, since the guest may fear the host.
+- If a message might describe a condition, the ticket goes to a live person. If a safety cue shows up mid-chat, the rebooking or refund agent stops and the ticket goes back to triage.
 - Anger or a callback request alone is not a safety condition. Those tickets stay with the rebooking agent.
 
 ### Money limits
@@ -44,7 +48,7 @@ The agents also have read and messaging tools, listed in the spec. The two money
 
 ### What the 60 tickets should show
 
-6 safety tickets (LIS-TKT-0007, 0015, 0023, 0034, 0046, 0055), 34 rebooking and 20 refund. All 6 safety tickets must reach a live safety agent with no money action first.
+6 safety tickets (LIS-TKT-0007, 0015, 0023, 0034, 0046, 0055), 34 rebooking and 20 refund. All 6 safety tickets must reach a live person with no money action first.
 
 ## Set up
 
