@@ -59,6 +59,8 @@ uv pip install -e .
 
 API keys go in environment variables or a local `.env`. Git ignores `.env`.
 
+This repo is public. The 60 tickets in `data/` are synthetic. Never add real guest data or API keys.
+
 ## Status
 
 Spec drafted, code not started. The 450-listing file the policy names is still missing.

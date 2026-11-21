@@ -28,5 +28,5 @@ Rules that override every other document in this repo. If the spec, a prompt, or
 
 ## 5. Safe data only
 
-- This repo is private and holds only the provided incident tickets and policy. No real guest data is added.
+- This repo is public. It holds only the provided incident tickets, which are synthetic, and the policy. No real guest data is ever added, because anything committed is visible to everyone.
 - API keys live in environment variables, never in code or in git.
