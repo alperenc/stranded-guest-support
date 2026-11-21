@@ -1,0 +1,14 @@
+[project]
+name = "stranded-guest-support"
+version = "0.1.0"
+description = "Rescue crew of AI agents for stranded Lisbon guests: rebook, refund, or hand off to a live safety agent."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stranded_guest_support"]
